@@ -24,7 +24,7 @@ const WindowButton = styled.button`
 
 export default function WindowButtons() {
     return (
-        <div>
+        <div className='undraggable'>
             <WindowButton onClick={() => {
                 ipcRenderer.send('window', 'minimize');
             }}>_</WindowButton>

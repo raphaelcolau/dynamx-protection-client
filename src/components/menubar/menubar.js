@@ -11,8 +11,9 @@ const MenuBar = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    --webkit-app-region: drag;
-    --webkit-user-select: none;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    user-select: none;
 
     & img {
         height: 90%;

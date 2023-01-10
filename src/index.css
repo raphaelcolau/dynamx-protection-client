@@ -15,7 +15,13 @@ body {
 }
 
 .draggable {
-  --webkit-user-select: none;
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
   user-select: none;
-  --webkit-app-region: drag;
+}
+
+.undraggable {
+  -webkit-app-region: no-drag;
+  -webkit-user-select: unset;
+  user-select: unset;  
 }

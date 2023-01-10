@@ -8,8 +8,9 @@ const Page = styled.div`
     background-color: #282830;
     background: url(${background}) center no-repeat;
     color: rgba(255, 255, 255, 0.6);
-    --webkit-app-region: drag;
-    --webkit-user-select: none;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    user-select: none;
 `;
 
 export default function PageComponent({ children }) {
