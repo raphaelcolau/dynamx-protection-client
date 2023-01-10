@@ -24,13 +24,13 @@ const WindowButton = styled.button`
 
 export default function WindowButtons() {
     return (
-        <>
+        <div>
             <WindowButton onClick={() => {
                 ipcRenderer.send('window', 'minimize');
             }}>_</WindowButton>
             <WindowButton className='button__close' onClick={() => {
                 ipcRenderer.send('window', 'close');
             }}>X</WindowButton>
-        </>
+        </div>
     );
 }

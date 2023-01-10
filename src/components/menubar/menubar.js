@@ -1,38 +1,32 @@
 import React from 'react';
+import styled from 'styled-components';
 import logo from '../../assets/images/head-logo.png';
 import WindowButtons from './windowButton';
 
-// Path: src\components\menubar.js
-const styleMenuBar = {
-    width: '100wh',
-    height: '25px',
-    overflow: "hidden",
-    backgroundColor: '#191924',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    '--webkit-app-region': 'drag',
-    '--webkit-user-select': 'none',
+const MenuBar = styled.div`
+    width: 100wh;
+    height: 25px;
+    overflow: hidden;
+    background-color: #191924;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    --webkit-app-region: drag;
+    --webkit-user-select: none;
 
-    '&.MenuBar__logo': {
-        height: '100%',
-        width: 'auto',
+    & img {
+        height: 90%;
+        width: auto;
+        margin-left: 0.5rem;
     }
-};
+`;
 
-
-
-
-export default function MenuBar() {
+export default function MenuBarComponent() {
 
   return (
-    <div className="MenuBar draggable" style={styleMenuBar}>
-        <div className="MenuBar__logo">
-            <img src={logo} alt="dynamx logo" />
-        </div>
-        <div className="MenuBar__button">
-            <WindowButtons />
-        </div>
-    </div>
+    <MenuBar>
+        <img src={logo} alt="dynamx logo" />
+        <WindowButtons />
+    </MenuBar>
   );
 }
