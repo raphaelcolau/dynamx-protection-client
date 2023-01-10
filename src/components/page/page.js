@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import background from '../../assets/images/background.png';
+import MenuBarComponent from '../menubar/menubar';
 
 const Page = styled.div`
     width: 100wh;
@@ -11,5 +12,9 @@ const Page = styled.div`
 `;
 
 export default function PageComponent({ children }) {
-  return <Page>{children}</Page>;
-}
+  return (
+    <Page>
+      <MenuBarComponent />
+      {children}
+    </Page>
+)}
