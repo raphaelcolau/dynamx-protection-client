@@ -1,9 +1,10 @@
 import MenuBarComponent from "../components/menubar/menubar";
+import PageComponent from "../components/page/page";
 
 export default function PageLogin() {
   return (
-    <div className="PageLogin">
-        <MenuBarComponent />
-    </div>
+    <PageComponent>
+      <MenuBarComponent />
+    </PageComponent>
   );
 }
