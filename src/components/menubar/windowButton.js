@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+const { ipcRenderer } = window.require('electron');
 
 const WindowButton = styled.button`
     height: 100%;
@@ -16,9 +17,20 @@ const WindowButton = styled.button`
 
     }
 
-    &.CloseButton:last-child:hover {
+    &.button__close:hover {
         background-color: #ED4245;
     }
 `;
 
-export default WindowButton;
+export default function WindowButtons() {
+    return (
+        <>
+            <WindowButton onClick={() => {
+                ipcRenderer.send('window', 'minimize');
+            }}>_</WindowButton>
+            <WindowButton className='button__close' onClick={() => {
+                ipcRenderer.send('window', 'close');
+            }}>X</WindowButton>
+        </>
+    );
+}

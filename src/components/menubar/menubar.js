@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import logo from '../../assets/images/head-logo.png';
-import WindowButton from './windowButton';
+import WindowButtons from './windowButton';
 
 // Path: src\components\menubar.js
 const styleMenuBar = {
@@ -32,8 +31,7 @@ export default function MenuBar() {
             <img src={logo} alt="dynamx logo" />
         </div>
         <div className="MenuBar__button">
-            <WindowButton>_</WindowButton>
-            <WindowButton className='CloseButton'>X</WindowButton>
+            <WindowButtons />
         </div>
     </div>
   );

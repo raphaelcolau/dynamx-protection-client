@@ -7,7 +7,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.draggable {
+  --webkit-user-select: none;
+  user-select: none;
+  --webkit-app-region: drag;
+}
+
+root {
+  --webkit-app-region: drag;
 }
