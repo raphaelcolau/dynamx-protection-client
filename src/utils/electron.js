@@ -37,4 +37,5 @@ app.whenReady().then(() => {
   });
 });
 
+// ipcMain listener for window buttons
 WindowListener();
