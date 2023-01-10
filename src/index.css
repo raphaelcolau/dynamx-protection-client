@@ -19,7 +19,3 @@ body {
   user-select: none;
   --webkit-app-region: drag;
 }
-
-root {
-  --webkit-app-region: drag;
-}
