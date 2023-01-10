@@ -7,6 +7,7 @@ const Page = styled.div`
     height: 100vh;
     background-color: #282830;
     background: url(${background}) center no-repeat;
+    color: rgba(255, 255, 255, 0.6);
     --webkit-app-region: drag;
     --webkit-user-select: none;
 `;

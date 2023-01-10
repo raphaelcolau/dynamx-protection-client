@@ -8,10 +8,10 @@ function createWindow() {
     width: 600,
     height: 600,
     movable: true,
-    resizable: true,
+    resizable: false,
     frame: true,
     titleBarStyle: 'hidden',
-    icon: path.join(__dirname, '../public/logo512.png'),
+    icon: path.join(__dirname, '../../public/logo192.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
