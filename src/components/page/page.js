@@ -11,6 +11,10 @@ const Page = styled.div`
     -webkit-app-region: drag;
     -webkit-user-select: none;
     user-select: none;
+
+    & > * {
+      -webkit-app-region: no-drag;
+    }
 `;
 
 export default function PageComponent({ children }) {
