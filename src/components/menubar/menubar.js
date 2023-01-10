@@ -18,6 +18,7 @@ const MenuBar = styled.div`
         height: 90%;
         width: auto;
         margin-left: 0.5rem;
+        user-select: none;
     }
 `;
 
@@ -25,7 +26,7 @@ export default function MenuBarComponent() {
 
   return (
     <MenuBar>
-        <img src={logo} alt="dynamx logo" />
+        <img src={logo} alt="dynamx logo" draggable="false"/>
         <WindowButtons />
     </MenuBar>
   );
