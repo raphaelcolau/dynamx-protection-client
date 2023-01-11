@@ -27,7 +27,7 @@ export default function WindowButtons() {
         <div className='undraggable'>
             <WindowButton onClick={() => {
                 ipcRenderer.send('window', 'minimize');
-            }}>_</WindowButton>
+            }}>--</WindowButton>
             <WindowButton className='button__close' onClick={() => {
                 ipcRenderer.send('window', 'close');
             }}>X</WindowButton>
