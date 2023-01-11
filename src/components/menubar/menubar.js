@@ -11,7 +11,7 @@ const MenuBar = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    -webkit-app-region: drag;
+    -webkit-app-region: drag !important; //!important is needed to override the -webkit-app-region: no-drag from the parent on his children (page.js)
     -webkit-user-select: none;
     user-select: none;
 
