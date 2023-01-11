@@ -25,3 +25,9 @@ body {
   -webkit-user-select: unset;
   user-select: unset;  
 }
+
+.MuiAutocomplete-popper {
+  -webkit-app-region: no-drag;
+  -webkit-user-select: unset;
+  user-select: unset;
+}

@@ -78,7 +78,13 @@ export default function PageLogin() {
     '-webkit-app-region': 'drag',
     '& > *': {
       '-webkit-app-region': 'no-drag',
-    }
+
+    },
+    "& .MuiAutocomplete-popper": {
+      '-webkit-app-region': 'no-drag',
+      'user-select': 'unset',
+      'background-color': 'rgba(255, 255, 255, 1)',
+    },
   }
   
   return (

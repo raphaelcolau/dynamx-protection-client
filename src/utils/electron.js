@@ -8,7 +8,7 @@ function createWindow() {
     width: 600,
     height: 600,
     movable: true,
-    resizable: false,
+    resizable: true,
     frame: true,
     titleBarStyle: 'hidden',
     icon: path.join(__dirname, '../../public/logo192.png'),
