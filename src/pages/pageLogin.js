@@ -111,7 +111,6 @@ function InputHost() {
 async function getHistory() {
     let history = await localStorage.getItem('history');
     history = JSON.parse(history);
-    console.log(history);
     return history;
 }
 
@@ -130,7 +129,7 @@ export default function PageLogin() {
     alignItems: 'center',
     width: '100%',
     height: 'calc(90% - 25px)', // 25px is the height of the menubar
-    '-webkit-app-region': 'drag',
+    'WebkitAppRegion': 'drag',
     '& > *': {
       'WebkitAppRegion': 'no-drag',
 
