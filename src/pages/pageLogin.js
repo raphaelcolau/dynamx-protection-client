@@ -14,9 +14,7 @@ function InputHost() {
     React.useEffect(() => {
     let active = true;
 
-    if (!loading) {
-    return undefined;
-    }
+    if (!loading) {return undefined;}
 
     (async () => {
         const history = await getHistory();
@@ -38,73 +36,89 @@ function InputHost() {
 
     return (
         <Autocomplete
-        value={value}
-        className="undraggable"
-        open={open}
-        onOpen={() => {
-            setOpen(true);
-        }}
-        onClose={() => {
-            setOpen(false);
-        }}
-        onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-            setValue({
-            host: newValue,
-            });
-        } else if (newValue && newValue.inputValue) {
-            // Create a new value from the user input
-            setValue({
-            host: newValue.inputValue,
-            });
-        } else {
-            setValue(newValue);
-        }
-        }}
-        filterOptions={(options, params) => {
-        const filtered = filter(options, params);
+            value={value}
+            className="undraggable"
+            open={open}
+            onOpen={() => {setOpen(true);}}
+            onClose={() => {setOpen(false);}}
+            onChange={(event, newValue) => {
+                if (typeof newValue === 'string') {
+                    setValue({
+                    host: newValue,
+                    });
+                } else if (newValue && newValue.inputValue) {
+                    // Create a new value from the user input
+                    setValue({
+                    host: newValue.inputValue,
+                    });
+                } else {
+                    setValue(newValue);
+                }
+            }}
+            filterOptions={(options, params) => {
+            const filtered = filter(options, params);
 
-        const { inputValue } = params;
-        // Suggest the creation of a new value
-        const isExisting = options.some((option) => inputValue === option.host);
-        if (inputValue !== '' && !isExisting) {
-            filtered.push({
-            inputValue,
-            host: `New "${inputValue}"`,
-            });
-        }
-
-        return filtered;
-        }}
-        selectOnFocus
-        clearOnBlur
-        handleHomeEndKeys
-        id="Server host"
-        options={options}
-        loading={loading}
-        getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
-        if (typeof option === 'string') {
-            return option;
-        }
-        // Add "xxx" option created dynamically
-        if (option.inputValue) {
-            return option.inputValue;
-        }
-        // Regular option
-        return option.host;
-        }}
-        renderOption={(props, option) => <li {...props} onClick={() => {
-            if (option.host.startsWith("New")) {
-                setHistory(option.host.split(' ')[1].replace('"', ''));
+            const { inputValue } = params;
+            // Suggest the creation of a new value
+            const isExisting = options.some((option) => inputValue === option.host);
+            if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                inputValue,
+                host: `New "${inputValue}"`,
+                });
             }
-        }}>{option.host}</li>}
-        sx={{ width: 300 }}
-        freeSolo
-        renderInput={(params) => (
-        <TextField {...params} label="Server host" />
+
+            return filtered;
+            }}
+            selectOnFocus
+            clearOnBlur
+            handleHomeEndKeys
+            id="Server host"
+            options={options}
+            loading={loading}
+            getOptionLabel={(option) => {
+            // Value selected with enter, right from the input
+            if (typeof option === 'string') {
+                return option;
+            }
+            // Add "xxx" option created dynamically
+            if (option.inputValue) {
+                return option.inputValue;
+            }
+            // Regular option
+            return option.host;
+            }}
+            renderOption={(props, option) => {
+                return ListAutoComplete(props, option, setHistory, setValue, setOpen);
+            }}
+            sx={{ width: 300 }}
+            freeSolo
+            renderInput={(params) => (
+            <TextField {...params} label="Server host" />
         )}
     />
+    )
+}
+
+function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
+    return (
+        <li 
+            {...props}
+            onClick={() => {
+                console.log(props);
+                if (option.host.startsWith("New")) {
+                    const newOption = option.host.split(' ')[1].replaceAll('"', '');
+                    setHistory(newOption);
+                    setValue(newOption);
+                    setOpen(false);
+                } else {
+                    setValue(option);
+                    setOpen(false);
+                }
+            }}
+        >
+            {option.host}
+        </li>
     )
 }
 
