@@ -73,6 +73,7 @@ function InputHost() {
             return filtered;
             }}
             selectOnFocus
+            blurOnSelect
             clearOnBlur
             handleHomeEndKeys
             id="Server host"
@@ -126,7 +127,6 @@ function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
             {...props}
             style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
             onClick={() => {
-                console.log(props);
                 if (option.host.startsWith("New")) {
                     const newOption = option.host.split(' ')[1].replaceAll('"', '');
                     setHistory(newOption);
