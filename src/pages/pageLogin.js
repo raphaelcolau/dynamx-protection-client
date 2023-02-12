@@ -113,6 +113,14 @@ function InputHost() {
 }
 
 function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
+
+    const handleDelete = async (event) => {
+        event.stopPropagation();
+        removeHistory(option.host);
+        setValue("");
+        setOpen(false);
+    };
+
     return (
         <li 
             {...props}
@@ -132,15 +140,13 @@ function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
                 }
             }}
         >
-            {option.host}
+            {option.host.slice(0, 29)}
             {option.host.startsWith("New") ? null : 
                 <IconButton 
                 aria-label="delete"
                 size="small"
-                onClick={() => {
-                    removeHistory(option.host);
-                    setValue("");
-                }}>
+                onClick={(event) => handleDelete(event)}
+                >
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>
             }
