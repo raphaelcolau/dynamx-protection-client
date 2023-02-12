@@ -31,3 +31,22 @@ body {
   -webkit-user-select: unset;
   user-select: unset;
 }
+
+/* ===== Scrollbar CSS ===== */
+  * {
+  scrollbar-width: none;
+  scrollbar-color: #e6750c9c transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #e6750c9c;
+  border-radius: 10px;
+}

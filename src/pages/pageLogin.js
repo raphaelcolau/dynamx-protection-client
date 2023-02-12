@@ -2,6 +2,8 @@ import PageComponent from "../components/page/page";
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const filter = createFilterOptions();
 
@@ -104,22 +106,42 @@ function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
     return (
         <li 
             {...props}
+            style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
             onClick={() => {
-                console.log(props);
                 if (option.host.startsWith("New")) {
                     const newOption = option.host.split(' ')[1].replaceAll('"', '');
                     setHistory(newOption);
                     setValue(newOption);
                     setOpen(false);
                 } else {
-                    setValue(option);
-                    setOpen(false);
+                    if (option.host !== undefined) {
+                        setValue(option);
+                        setOpen(false);
+                    }
                 }
             }}
         >
             {option.host}
+            {option.host.startsWith("New") ? null : 
+                <IconButton 
+                aria-label="delete"
+                size="small"
+                onClick={() => {
+                    removeHistory(option.host);
+                    setValue(null);
+                }}>
+                    <DeleteIcon fontSize="inherit"/>
+                </IconButton>
+            }
         </li>
     )
+}
+
+async function removeHistory(entry) {
+    const history = await getHistory();
+    const newHistory = history.filter((item) => item.host !== entry);
+    await localStorage.setItem('history', JSON.stringify(newHistory));
+    return Promise.resolve(newHistory);
 }
 
 async function getHistory() {
@@ -129,10 +151,10 @@ async function getHistory() {
 }
 
 async function setHistory(entry) {
-  const history = await getHistory();
-  history.push({host: entry});
-  await localStorage.setItem('history', JSON.stringify(history));
-  return Promise.resolve(history);
+    const history = await getHistory();
+    history.push({host: entry});
+    await localStorage.setItem('history', JSON.stringify(history));
+    return Promise.resolve(history);
 }
 
 export default function PageLogin() {
