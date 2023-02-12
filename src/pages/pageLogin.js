@@ -78,6 +78,16 @@ function InputHost() {
             id="Server host"
             options={options}
             loading={loading}
+            onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                    if (value !== null && value.host !== undefined && value.host !== "" && !value.host.startsWith("New")) {
+                        setHistory(value.host);
+                    }
+                }
+                if (event.key === 'Escape') {
+                    setOpen(false);
+                }
+            }}
             getOptionLabel={(option) => {
             // Value selected with enter, right from the input
             if (typeof option === 'string') {
@@ -108,6 +118,7 @@ function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
             {...props}
             style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
             onClick={() => {
+                console.log(props);
                 if (option.host.startsWith("New")) {
                     const newOption = option.host.split(' ')[1].replaceAll('"', '');
                     setHistory(newOption);
@@ -128,7 +139,7 @@ function ListAutoComplete(props, option, setHistory, setValue, setOpen) {
                 size="small"
                 onClick={() => {
                     removeHistory(option.host);
-                    setValue(null);
+                    setValue("");
                 }}>
                     <DeleteIcon fontSize="inherit"/>
                 </IconButton>
@@ -146,15 +157,16 @@ async function removeHistory(entry) {
 
 async function getHistory() {
     let history = await localStorage.getItem('history');
-    history = JSON.parse(history);
+    history = history === null ? [] : JSON.parse(history);
     return history;
 }
 
 async function setHistory(entry) {
     const history = await getHistory();
-    history.push({host: entry});
-    await localStorage.setItem('history', JSON.stringify(history));
-    return Promise.resolve(history);
+    const newHistory = history.filter((item) => item.host !== entry);
+    newHistory.unshift({host: entry});
+    await localStorage.setItem('history', JSON.stringify(newHistory));
+    return Promise.resolve(newHistory);
 }
 
 export default function PageLogin() {

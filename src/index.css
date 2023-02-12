@@ -42,6 +42,10 @@ body {
   width: 7px;
 }
 
+*::-webkit-scrollbar-x {
+  height: 7px;
+}
+
 *::-webkit-scrollbar-track {
   background: transparent;
 }
