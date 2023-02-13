@@ -118,7 +118,7 @@ function DropZone() {
         e.stopPropagation();
         setDragging(false);
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            if (e.dataTransfer.files[0].type === "application/zip") {
+            if (e.dataTransfer.files[0].type === "application/zip" || e.dataTransfer.files[0].type === "application/x-zip-compressed" || (e.dataTransfer.files[0].type === "" && e.dataTransfer.files[0].name.endsWith(".dnxpack"))) {
                 setError(null);
                 setFile(e.dataTransfer.files[0]);
                 e.dataTransfer.clearData();
