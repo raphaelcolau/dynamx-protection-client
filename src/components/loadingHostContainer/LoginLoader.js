@@ -8,7 +8,11 @@ async function login(address, setConnecting, setError) {
         setConnecting(false);
     } catch (error) {
         console.log(error);
-        setError(error.message);
+        if (error.response.data) {
+            setError(error.response.data);
+        } else {
+            setError(error.message);
+        }
         setConnecting(false);
     }
 }

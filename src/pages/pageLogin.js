@@ -36,8 +36,7 @@ export default function PageLogin() {
 				<LoginLoader address={address} setConnecting={setConnecting} setError={setError}/>
 			: 
 				<div style={inputContainer}>
-					{error !== "" ? <p>{error}</p> : null}
-					<InputHost setAddress={setAddress} address={address} />
+					<InputHost setAddress={setAddress} address={address} error={error} setError={setError} />
 
 					<Fab 
 						className="undraggable"

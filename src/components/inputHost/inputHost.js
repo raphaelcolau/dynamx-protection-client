@@ -66,6 +66,7 @@ export default function InputHost(props) {
                     setValue(newValue);
                     props.setAddress(newValue);
                 }
+                props.setError("");
             }}
             filterOptions={(options, params) => {
                 const filtered = filter(options, params);
@@ -117,7 +118,11 @@ export default function InputHost(props) {
             sx={{ width: 300 }}
             freeSolo
             renderInput={(params) => (
-            <TextField {...params} label="Server host" />
+            <TextField
+                {...props.error ? {error: true, helperText: props.error} : {}}
+                {...params} 
+                label="Server host" 
+            />
         )}
     />
     )
