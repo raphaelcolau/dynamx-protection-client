@@ -11,6 +11,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageLogin from './pages/pageLogin';
 import PageHome from './pages/pageHome';
+import PageAdd from './pages/pageAdd';
+import PagePacks from './pages/pagePacks';
+import PageWhitelist from './pages/pageWhitelist';
+import PageBlacklist from './pages/pageBlacklist';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -32,6 +36,10 @@ const darkDynamXTheme = createTheme({
 const router = createBrowserRouter([
   { path: '/', element: <PageLogin /> },
   { path: '/home', element: <PageHome /> },
+  { path: '/add', element: <PageAdd /> },
+  { path: '/packs', element: <PagePacks /> },
+  { path: '/whitelist', element: <PageWhitelist /> },
+  { path: '/blacklist', element: <PageBlacklist /> },
 ]);
 
 root.render(

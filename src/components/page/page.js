@@ -25,6 +25,6 @@ export default function PageComponent(props, { children }) {
       
       {props.children}
 
-      <BottomNavigationComponent />
+      <BottomNavigationComponent pageNumber={props.pageNumber}/>
     </Page>
 )}
