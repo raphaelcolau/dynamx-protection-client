@@ -7,9 +7,10 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PageLogin from './pages/pageLogin';
+import PageHome from './pages/pageHome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,11 +25,10 @@ const darkDynamXTheme = createTheme({
   },
 });
 
-const router = createBrowserRouter(createRoutesFromElements(
-  <Route path="/" element={<PageLogin />}>
-
-  </Route>
-))
+const router = createBrowserRouter([
+  { path: '/', element: <PageLogin /> },
+  { path: '/home', element: <PageHome /> },
+]);
 
 root.render(
   <React.StrictMode>
