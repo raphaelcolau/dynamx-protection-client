@@ -1,7 +1,8 @@
-import { Paper, Input } from '@mui/material';
+import { Paper, TextField, Grid, Fab } from '@mui/material';
 import * as React from 'react';
 import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function PageAdd() {
     const pageContainer = {
@@ -16,20 +17,78 @@ export default function PageAdd() {
 
     const paperStyle = {
         width: '90%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     };
     
     return (
         <PageComponent navigation pageNumber={1}>
             <div style={pageContainer}>
-                <Paper elevation={3} style={paperStyle}>
+
+                <Paper elevation={1} style={paperStyle}>
                     <DropZone />
                 </Paper>
-                <Paper elevation={3} style={paperStyle}>
-                    Input zone
+
+                <Paper elevation={1} style={paperStyle}>
+                    <InputZone />
                 </Paper>
+
             </div>
         </PageComponent>
     );
+}
+
+function InputZone() {
+    const inputContainer = {
+        width: '95%',
+        height: '28vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    };
+    
+    return (
+        <div style={inputContainer}>
+            <Grid container spacing={0} style={{gap: "1rem 0"}}>
+                <Grid item xs={12}>
+                    <TextField 
+                        style={{width: "100%"}}
+                        variant="outlined"
+                        label="Package Name"
+                        onKeyDown={(e) => {
+                            if(!/^[a-zA-Z0-9-]+$/.test(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={9}>
+                    <TextField 
+                        style={{width: "90%"}}
+                        variant="outlined"
+                        label="Root folder"
+                        placeholder={`e.g. "MyMod" don't include the dot`}
+                        onKeyDown={(e) => {
+                            if(!/^[a-zA-Z0-9_\-.]+$/.test(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={3} style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                }}>
+                    <Fab variant="extended" color="primary" aria-label="add" style={{color: 'black'}}>
+                        <AddIcon sx={{ mr: 1}}/>
+                        Create
+                    </Fab>
+                </Grid>
+            </Grid>
+        </div>
+    )
 }
 
 function DropZone() {
@@ -76,6 +135,7 @@ function DropZone() {
 
     const dropZoneStyle = {
         height: '37vh',
+        width: '100%',
         margin: '1rem',
         display: 'flex',
         flexDirection: 'column',
@@ -85,6 +145,7 @@ function DropZone() {
         border: `1px dashed ${error ? '#c62828' : 'rgba(255, 255, 255, 0.6)'}`,
         cursor: 'pointer',
         color: `${error ? '#c62828' : 'rgba(255, 255, 255, 0.6)'}`,
+        position: 'relative',
     };
 
     const inputFileStyle = {
@@ -112,14 +173,13 @@ function DropZone() {
             }
             <CloudDownloadIcon sx={{ fontSize: 60 }} />
             
-            <label htmlFor="file-input">
-                <input style={inputFileStyle}
-                    type="file"
-                    onChange={onFileSelect}
-                    accept=".dnxpack,.zip"
-                    id="file-input"
-                />
-            </label>
+            
+            <input style={inputFileStyle}
+                type="file"
+                onChange={onFileSelect}
+                accept=".dnxpack,.zip"
+                id="file-input"
+            />
         </div>
     )
 }
