@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import background from '../../assets/images/background.png';
 import MenuBarComponent from '../menubar/menubar';
+import BottomNavigationComponent from './bottomNavigation';
 
 const Page = styled.div`
     width: 100wh;
@@ -17,10 +18,11 @@ const Page = styled.div`
     }
 `;
 
-export default function PageComponent({ children }) {
+export default function PageComponent(props, { children }) {
   return (
     <Page>
       <MenuBarComponent />
-      {children}
+      {props.children}
+      <BottomNavigationComponent />
     </Page>
 )}
