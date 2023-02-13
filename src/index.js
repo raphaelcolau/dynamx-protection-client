@@ -22,6 +22,10 @@ const darkDynamXTheme = createTheme({
       light: '#ffa545',
       dark: '#ad4700',
     },
+    background: {
+      default: '#2F2F2F',
+      paper: '#2F2F2F',
+    },
   },
 });
 
