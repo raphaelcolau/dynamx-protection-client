@@ -4,6 +4,7 @@ import Fab from '@mui/material/Fab';
 import { Login } from "@mui/icons-material";
 import InputHost from "../components/inputHost/inputHost";
 import LoginLoader from "../components/loadingHostContainer/LoginLoader";
+import login from "../adapters/auth";
 
 export default function PageLogin() {
 	const [connecting, setConnecting] = React.useState(false);
@@ -48,6 +49,7 @@ export default function PageLogin() {
 						onClick={() => {
 							if (address !== "" && address !== undefined && address !== null) {
 								setConnecting(true);
+								login(address, setConnecting, setError);
 							}
 						}}	
 						>
