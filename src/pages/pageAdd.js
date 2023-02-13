@@ -95,13 +95,10 @@ function DropZone() {
             onDragLeave={onDragLeave}
             onDragOver={onDragOver}
             onDrop={onDrop}
-            onClick={() => {
-
-            }}
         >
             {dragging ? 
                 "Drop here" : 
-                `${file.name ? `${file.name}` : "Drag and drop a file here or click to select a file"}`
+                `${(file && file.name) ? `${file.name}` : "Drag and drop a file here or click to select a file"}`
             }
             <CloudDownloadIcon sx={{ fontSize: 60 }} />
             
