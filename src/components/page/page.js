@@ -22,7 +22,9 @@ export default function PageComponent(props, { children }) {
   return (
     <Page>
       <MenuBarComponent />
+      
       {props.children}
+
       <BottomNavigationComponent />
     </Page>
 )}
