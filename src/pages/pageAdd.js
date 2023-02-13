@@ -35,6 +35,7 @@ export default function PageAdd() {
 function DropZone() {
     const [dragging, setDragging] = React.useState(false);
     const [file, setFile] = React.useState([]);
+    const [error, setError] = React.useState(null);
 
     const onDragEnter = (e) => {
         e.preventDefault();
@@ -57,11 +58,19 @@ function DropZone() {
         e.preventDefault();
         e.stopPropagation();
         setDragging(false);
-        console.log(e.dataTransfer.files[0]);
-        setFile(e.dataTransfer.files[0]);
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            if (e.dataTransfer.files[0].type === "application/zip") {
+                setError(null);
+                setFile(e.dataTransfer.files[0]);
+                e.dataTransfer.clearData();
+            } else {
+                setError("Only .zip and .dnxpack files are allowed");
+            }
+        }
     };
 
     const onFileSelect = (e) => {
+        setError(null);
         setFile(e.target.files[0]);
     };
 
@@ -73,9 +82,9 @@ function DropZone() {
         alignItems: 'center',
         justifyContent: 'center',
         gap: "1rem",
-        border: '1px dashed rgba(255, 255, 255, 0.6)',
+        border: `1px dashed ${error ? '#c62828' : 'rgba(255, 255, 255, 0.6)'}`,
         cursor: 'pointer',
-        color: 'rgba(255, 255, 255, 0.6)',
+        color: `${error ? '#c62828' : 'rgba(255, 255, 255, 0.6)'}`,
     };
 
     const inputFileStyle = {
@@ -96,6 +105,7 @@ function DropZone() {
             onDragOver={onDragOver}
             onDrop={onDrop}
         >
+            {error ? <p>{error}</p> : null}
             {dragging ? 
                 "Drop here" : 
                 `${(file && file.name) ? `${file.name}` : "Drag and drop a file here or click to select a file"}`
