@@ -5,6 +5,7 @@ async function login(address, setConnecting, setError) {
     try {
         const response = await axios.post(`//${address}/auth/connect`, {});
         console.log(response.data);
+        sessionStorage.setItem("apiAddress", address);
         setConnecting(false);
     } catch (error) {
         console.log(error);
@@ -26,6 +27,7 @@ export default function LoginLoader(props) {
 		gap: "1rem",
 	}
 
+    console.log("clicked")
     login(props.address, props.setConnecting, props.setError);
 
 	return (
