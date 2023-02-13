@@ -3,7 +3,7 @@ import * as React from 'react';
 import Fab from '@mui/material/Fab';
 import { Login } from "@mui/icons-material";
 import InputHost from "../components/inputHost/inputHost";
-
+import LoginLoader from "../components/loadingHostContainer/LoginLoader";
 
 export default function PageLogin() {
 	const [connecting, setConnecting] = React.useState(false);
@@ -32,9 +32,7 @@ export default function PageLogin() {
 		<PageComponent>
 			<div style={hostContainer}>
 			{connecting ?
-				<div>
-					<p>Connecting to {address}...</p>
-				</div>
+				<LoginLoader address={address}/>
 			: 
 				<div style={inputContainer}>
 					<InputHost setAddress={setAddress} />
@@ -47,13 +45,12 @@ export default function PageLogin() {
 						aria-label="add"
 						{...{disabled: (address === "" || address === undefined || address === null)}}
 						onClick={() => {
-							if (address !== "") {
+							if (address !== "" && address !== undefined && address !== null) {
 								setConnecting(true);
 							}
-							console.log(address);
 							setTimeout(() => {
 								setConnecting(false);
-							}, 3000);
+							}, 10000);
 						}}	
 						>
 						<Login sx={{mr: 1}} />
