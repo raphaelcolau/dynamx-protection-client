@@ -11,7 +11,7 @@ export default function LoginLoader(props) {
 	}
 
 	return (
-		<div style={loadingContainer}>
+		<div className="undraggable" style={loadingContainer}>
 			<CircularProgress />
 			<p> Connecting to {props.address}</p>
 		</div>
