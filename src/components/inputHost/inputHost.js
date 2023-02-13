@@ -8,7 +8,7 @@ import setHistory from '../historyHost/set';
 const filter = createFilterOptions();
 
 export default function InputHost(props) {
-    const [value, setValue] = React.useState(null);
+    const [value, setValue] = React.useState(props.address);
     const [options, setOptions] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const loading = open && options.length === 0;

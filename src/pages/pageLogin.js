@@ -35,7 +35,7 @@ export default function PageLogin() {
 				<LoginLoader address={address}/>
 			: 
 				<div style={inputContainer}>
-					<InputHost setAddress={setAddress} />
+					<InputHost setAddress={setAddress} address={address} />
 
 					<Fab 
 						className="undraggable"
