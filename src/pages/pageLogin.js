@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Fab from '@mui/material/Fab';
+import { Login } from "@mui/icons-material";
 
 const filter = createFilterOptions();
 
@@ -58,19 +60,19 @@ function InputHost() {
                 }
             }}
             filterOptions={(options, params) => {
-            const filtered = filter(options, params);
+                const filtered = filter(options, params);
 
-            const { inputValue } = params;
-            // Suggest the creation of a new value
-            const isExisting = options.some((option) => inputValue === option.host);
-            if (inputValue !== '' && !isExisting) {
-                filtered.push({
-                inputValue,
-                host: `New "${inputValue}"`,
-                });
-            }
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some((option) => inputValue === option.host);
+                if (inputValue !== '' && !isExisting) {
+                    filtered.push({
+                    inputValue,
+                    host: `New "${inputValue}"`,
+                    });
+                }
 
-            return filtered;
+                return filtered;
             }}
             selectOnFocus
             blurOnSelect
@@ -90,16 +92,16 @@ function InputHost() {
                 }
             }}
             getOptionLabel={(option) => {
-            // Value selected with enter, right from the input
-            if (typeof option === 'string') {
-                return option;
-            }
-            // Add "xxx" option created dynamically
-            if (option.inputValue) {
-                return option.inputValue;
-            }
-            // Regular option
-            return option.host;
+                // Value selected with enter, right from the input
+                if (typeof option === 'string') {
+                    return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                    return option.inputValue;
+                }
+                // Regular option
+                return option.host;
             }}
             renderOption={(props, option) => {
                 return ListAutoComplete(props, option, setHistory, setValue, setOpen);
@@ -189,11 +191,24 @@ export default function PageLogin() {
 
     },
   }
+
+  const inputContainer = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: '10px',
+  }
   
   return (
     <PageComponent>
       <div style={hostContainer}>
-        <InputHost />
+        <div style={inputContainer}>
+            <InputHost />
+            <Fab className="undraggable" variant="extended" size="medium" color="primary" aria-label="add">
+                <Login sx={{mr: 1}} />
+                Connect
+            </Fab>
+        </div>
       </div>
 
     </PageComponent>
