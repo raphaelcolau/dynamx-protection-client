@@ -5,12 +5,13 @@ import { Login } from "@mui/icons-material";
 import InputHost from "../components/inputHost/inputHost";
 import LoginLoader from "../components/loadingHostContainer/LoginLoader";
 import LoginAdapter from "../adapters/auth";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PageLogin() {
 	const [connecting, setConnecting] = React.useState(false);
 	const [address, setAddress] = React.useState("");
 	const [error, setError] = React.useState("");
+	const navigate = useNavigate();
 
 	const hostContainer = {
 		display: 'flex',
@@ -51,8 +52,7 @@ export default function PageLogin() {
 							if (address !== "" && address !== undefined && address !== null) {
 								setConnecting(true);
 								if (LoginAdapter(address, setConnecting, setError)) {
-									console.log("first")
-									redirect("/home");
+									navigate("/home");
 								}
 							}
 						}}	

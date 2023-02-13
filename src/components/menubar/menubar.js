@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../assets/images/head-logo.png';
 import WindowButtons from './windowButton';
@@ -20,14 +21,26 @@ const MenuBar = styled.div`
         width: auto;
         margin-left: 0.5rem;
         user-select: none;
+        cursor: pointer;
     }
 `;
 
 export default function MenuBarComponent() {
+  const navigate = useNavigate();
 
   return (
     <MenuBar>
-        <img src={logo} alt="dynamx logo" draggable="false"/>
+        <img 
+          className='undraggable'
+          src={logo}
+          alt="dynamx logo"
+          draggable="false"
+          onClick={() => {
+            sessionStorage.clear();
+            navigate('/');
+            console.log("redirect login")
+          }}
+          />
         <WindowButtons />
     </MenuBar>
   );
