@@ -8,6 +8,7 @@ import LoginLoader from "../components/loadingHostContainer/LoginLoader";
 export default function PageLogin() {
 	const [connecting, setConnecting] = React.useState(false);
 	const [address, setAddress] = React.useState("");
+	const [error, setError] = React.useState("");
 
 	const hostContainer = {
 		display: 'flex',
@@ -32,9 +33,10 @@ export default function PageLogin() {
 		<PageComponent>
 			<div style={hostContainer}>
 			{connecting ?
-				<LoginLoader address={address}/>
+				<LoginLoader address={address} setConnecting={setConnecting} setError={setError}/>
 			: 
 				<div style={inputContainer}>
+					{error !== "" ? <p>{error}</p> : null}
 					<InputHost setAddress={setAddress} address={address} />
 
 					<Fab 
@@ -48,9 +50,6 @@ export default function PageLogin() {
 							if (address !== "" && address !== undefined && address !== null) {
 								setConnecting(true);
 							}
-							setTimeout(() => {
-								setConnecting(false);
-							}, 10000);
 						}}	
 						>
 						<Login sx={{mr: 1}} />
