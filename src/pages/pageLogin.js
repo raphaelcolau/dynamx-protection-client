@@ -37,7 +37,6 @@ export default function PageLogin() {
 				</div>
 			: 
 				<div style={inputContainer}>
-					{address ? <p style={{alignSelf: "flex-start"}}>Connecting to {address}</p>: <></>}
 					<InputHost setAddress={setAddress} />
 
 					<Fab 
@@ -46,8 +45,11 @@ export default function PageLogin() {
 						size="medium"
 						color="primary"
 						aria-label="add"
+						{...{disabled: (address === "" || address === undefined || address === null)}}
 						onClick={() => {
-							setConnecting(true);
+							if (address !== "") {
+								setConnecting(true);
+							}
 							console.log(address);
 							setTimeout(() => {
 								setConnecting(false);
