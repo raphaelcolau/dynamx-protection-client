@@ -7,27 +7,27 @@ import setHistory from '../historyHost/set';
 
 const filter = createFilterOptions();
 
-export default function InputHost() {
-  const [value, setValue] = React.useState(null);
-  const [options, setOptions] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const loading = open && options.length === 0;
+export default function InputHost(props) {
+    const [value, setValue] = React.useState(null);
+    const [options, setOptions] = React.useState([]);
+    const [open, setOpen] = React.useState(false);
+    const loading = open && options.length === 0;
 
     React.useEffect(() => {
-    let active = true;
+        let active = true;
 
-    if (!loading) {return undefined;}
+        if (!loading) {return undefined;}
 
-    (async () => {
-        const history = await getHistory();
-        if (active) {
-            setOptions(history);
-        }
-    })();
+        (async () => {
+            const history = await getHistory();
+            if (active) {
+                setOptions(history);
+            }
+        })();
 
-    return () => {
-        active = false;
-    };
+        return () => {
+            active = false;
+        };
     }, [loading]);
 
     React.useEffect(() => {
@@ -35,6 +35,13 @@ export default function InputHost() {
             setOptions([]);
         }
     }, [open]);
+
+    React.useEffect(() => {
+        if (value !== null) {
+            if (!value.host) {props.setAddress(value);}
+            else {props.setAddress(value.host);}
+        }
+    }, [props, value]);
 
     return (
         <Autocomplete
@@ -46,15 +53,18 @@ export default function InputHost() {
             onChange={(event, newValue) => {
                 if (typeof newValue === 'string') {
                     setValue({
-                    host: newValue,
+                        host: newValue,
                     });
+                    props.setAddress(newValue);
                 } else if (newValue && newValue.inputValue) {
                     // Create a new value from the user input
                     setValue({
-                    host: newValue.inputValue,
+                        host: newValue.inputValue,
                     });
+                    props.setAddress(newValue.inputValue);
                 } else {
                     setValue(newValue);
+                    props.setAddress(newValue);
                 }
             }}
             filterOptions={(options, params) => {
