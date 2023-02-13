@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 export default function BottomNavigationComponent() {
     const [value, setValue] = React.useState(0);
@@ -35,7 +35,7 @@ export default function BottomNavigationComponent() {
             <BottomNavigationAction label="Add" icon={<LibraryAddIcon sx={ActionIconStyle} />} />
             <BottomNavigationAction label="Packs" icon={<LibraryBooksIcon sx={ActionIconStyle} />} />
             <BottomNavigationAction label="Whitelist" icon={<PlaylistAddCheckIcon sx={ActionIconStyle} />} />
-            <BottomNavigationAction label="Blacklist" icon={<FormatListBulletedIcon sx={ActionIconStyle} />} />
+            <BottomNavigationAction label="Blacklist" icon={<PlaylistRemoveIcon sx={ActionIconStyle} />} />
         </BottomNavigation>
     );
 }
