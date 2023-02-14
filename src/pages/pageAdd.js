@@ -40,12 +40,37 @@ export default function PageAdd() {
                 </Paper>
 
                 <Paper elevation={1} style={paperStyle}>
-                    <InputZone pack={pack} setPack={setPack} loading={loading}/>
+                    <InputZone pack={pack} setPack={setPack} loading={loading} setLoading={setLoading}/>
                 </Paper>
 
             </div>
         </PageComponent>
     );
+}
+
+function createPack(pack, setLoading) {
+    const formData = new FormData();
+    formData.append("pack_file", pack.pack_file);
+    formData.append("rep_id", pack.rep_id);
+
+    setLoading(true);
+
+    if (pack.game_dir && pack.game_dir !== "" && pack.game_dir.length > 0 && pack.game_dir !== null && pack.game_dir !== undefined) {
+        formData.append("game_dir", pack.game_dir);
+    }
+
+    console.log(formData.getAll("pack_file"));
+    axios.post(`//${sessionStorage.getItem("apiAddress")}/mprotector/packs/zip`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then((response) => {
+        console.log(response.data);
+        setLoading(false);
+    }).catch((error) => {
+        console.log(error);
+        setLoading(false);
+    });
 }
 
 function validPack(pack) {
@@ -56,8 +81,6 @@ function validPack(pack) {
     }
     return false;
 }
-
-
 
 function InputZone(props) {
     const [name, setName] = React.useState("");
@@ -171,6 +194,9 @@ function InputZone(props) {
                             aria-label="add"
                             {...((!props.loading && disabled) ? {} : {disabled: true})}
                             {...(props.loading ? {} : {variant: "extended"})}
+                            onClick={() => {
+                                createPack(props.pack, props.setLoading);
+                            }}
                             >
                             <AddIcon sx={{ mr: props.loading ? 0 : 1 }}/>
                             {props.loading ? null : "Create"}
