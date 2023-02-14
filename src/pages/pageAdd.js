@@ -49,18 +49,18 @@ export default function PageAdd() {
 }
 
 function createPack(pack, setLoading) {
-    const formData = new FormData();
-    formData.append("pack_file", pack.pack_file);
-    formData.append("rep_id", pack.rep_id);
+    const apiAddress = sessionStorage.getItem("apiAddress");
+    const fileName = pack.pack_file.name;
+    const file = new Blob([pack.pack_file], {type: "application/zip"});    
 
+    const formData = new FormData();
+    formData.append("pack_file", file, fileName);
+    formData.append("rep_id", pack.rep_id);
+    formData.append("game_dir", pack.game_dir);
     setLoading(true);
 
-    if (pack.game_dir && pack.game_dir !== "" && pack.game_dir.length > 0 && pack.game_dir !== null && pack.game_dir !== undefined) {
-        formData.append("game_dir", pack.game_dir);
-    }
 
-    console.log(formData.getAll("pack_file"));
-    axios.post(`//${sessionStorage.getItem("apiAddress")}/mprotector/packs/zip`, formData, {
+    axios.post(`//${apiAddress}/mprotector/packs/zip`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
