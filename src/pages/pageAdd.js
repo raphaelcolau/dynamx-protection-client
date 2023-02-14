@@ -1,10 +1,12 @@
-import { Paper, TextField, Grid, Fab, CircularProgress } from '@mui/material';
+import { Paper, TextField, Grid, Fab, CircularProgress, Snackbar } from '@mui/material';
 import * as React from 'react';
 import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
 import { Box } from '@mui/system';
+import { Button, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function PageAdd() {
     const [pack, setPack] = React.useState({
@@ -88,6 +90,8 @@ function InputZone(props) {
     const [helperText, setHelperText] = React.useState(" ");
     const [disabled, setDisabled] = React.useState(validPack(props.pack));
     const [timeoutId, setTimeoutId] = React.useState(null);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [downloadLink, setDownloadLink] = React.useState(null);
 
     React.useEffect(() => {
         setDisabled(validPack(props.pack));
@@ -217,6 +221,27 @@ function InputZone(props) {
 
                 </Grid>
             </Grid>
+
+            <Snackbar 
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => {
+                    setSnackbarOpen(false);
+                }}
+                message="Package protected successfully"
+                action={
+                    <React.Fragment>
+                        <Button color="secondary" size="small" onClick={() => {}}>
+                            Download
+                        </Button>
+                        <IconButton size="small" aria-label="close" color="inherit" onClick={() => {
+                            setSnackbarOpen(false);
+                        }}>
+                            <CloseIcon fontSize="small" />
+                        </IconButton>
+                    </React.Fragment>
+                }
+            />
         </div>
     )
 }
