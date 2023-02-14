@@ -50,7 +50,7 @@ export default function PageAdd() {
     );
 }
 
-function createPack(pack, setLoading) {
+function createPack(pack, setLoading, setSnackbar, setDownloadLink) {
     const apiAddress = sessionStorage.getItem("apiAddress");
     const fileName = pack.pack_file.name;
     const file = new Blob([pack.pack_file], {type: "application/zip"});    
@@ -67,7 +67,10 @@ function createPack(pack, setLoading) {
             'Content-Type': 'multipart/form-data'
         }
     }).then((response) => {
-        console.log(response.data);
+        if (response.data.dl_link) {
+            setDownloadLink(response.data.dl_link);
+            setSnackbar(true);
+        }
         setLoading(false);
     }).catch((error) => {
         console.log(error);
@@ -90,7 +93,7 @@ function InputZone(props) {
     const [helperText, setHelperText] = React.useState(" ");
     const [disabled, setDisabled] = React.useState(validPack(props.pack));
     const [timeoutId, setTimeoutId] = React.useState(null);
-    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(true);
     const [downloadLink, setDownloadLink] = React.useState(null);
 
     React.useEffect(() => {
@@ -199,7 +202,7 @@ function InputZone(props) {
                             {...((!props.loading && disabled) ? {} : {disabled: true})}
                             {...(props.loading ? {} : {variant: "extended"})}
                             onClick={() => {
-                                createPack(props.pack, props.setLoading);
+                                createPack(props.pack, props.setLoading, setSnackbarOpen, setDownloadLink);
                             }}
                             >
                             <AddIcon sx={{ mr: props.loading ? 0 : 1 }}/>
