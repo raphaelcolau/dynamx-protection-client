@@ -3,6 +3,7 @@ import * as React from 'react';
 import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios';
 
 export default function PageAdd() {
     const pageContainer = {
@@ -113,6 +114,24 @@ function DropZone() {
         e.stopPropagation();
     };
 
+    const defineFile = (file) => {
+        const address = sessionStorage.getItem("apiAddress");
+        if (file && file.name && !file.name !== "" && file.path && !file.path !== "") {
+            axios.post(`//${address}/checks/filename`, {
+                fileName: file.name,
+            })
+            .then((response) => {
+                if (response.data === "OK") {
+                    setFile(file);
+                    setError(null);
+                } else {
+                    setError(response.data);
+                    setFile([]);
+                }
+            })
+        }
+    };
+
     const onDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -120,7 +139,7 @@ function DropZone() {
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
             if (e.dataTransfer.files[0].type === "application/zip" || e.dataTransfer.files[0].type === "application/x-zip-compressed" || (e.dataTransfer.files[0].type === "" && e.dataTransfer.files[0].name.endsWith(".dnxpack"))) {
                 setError(null);
-                setFile(e.dataTransfer.files[0]);
+                defineFile(e.dataTransfer.files[0]);
                 e.dataTransfer.clearData();
             } else {
                 setError("Only .zip and .dnxpack files are allowed");
@@ -130,7 +149,7 @@ function DropZone() {
 
     const onFileSelect = (e) => {
         setError(null);
-        setFile(e.target.files[0]);
+        defineFile(e.target.files[0]);
     };
 
     const dropZoneStyle = {
