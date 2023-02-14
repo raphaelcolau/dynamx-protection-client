@@ -12,7 +12,7 @@ export default function PageAdd() {
         game_dir: "",
         pack_file: [],
     });
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
 
     const pageContainer = {
         width: '100%',
@@ -169,7 +169,7 @@ function InputZone(props) {
                             style={{color: 'black'}}
                             color="primary"
                             aria-label="add"
-                            {...((disabled || !props.loading) ? {} : {disabled: true})}
+                            {...((!props.loading && disabled) ? {} : {disabled: true})}
                             {...(props.loading ? {} : {variant: "extended"})}
                             >
                             <AddIcon sx={{ mr: props.loading ? 0 : 1 }}/>
