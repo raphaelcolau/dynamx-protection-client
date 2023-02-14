@@ -4,9 +4,18 @@ import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import { debounce } from 'lodash';
 
 export default function PageAdd() {
+    const [pack, setPack] = React.useState({
+        rep_id: "",
+        game_dir: "",
+        pack_file: [],
+    });
+
+    React.useEffect(() => {
+        console.log(pack);
+    }, [pack]);
+
     const pageContainer = {
         width: '100%',
         height: 'calc(100vh - 4.5rem)', // 4.5rem is the height of the bottom navigation bar    
@@ -29,11 +38,11 @@ export default function PageAdd() {
             <div style={pageContainer}>
 
                 <Paper elevation={1} style={paperStyle}>
-                    <DropZone />
+                    <DropZone pack={pack} setPack={setPack} />
                 </Paper>
 
                 <Paper elevation={1} style={paperStyle}>
-                    <InputZone />
+                    <InputZone pack={pack} setPack={setPack} />
                 </Paper>
 
             </div>
@@ -41,13 +50,27 @@ export default function PageAdd() {
     );
 }
 
-function InputZone() {
+function validPack(pack) {
+    if (pack.rep_id && pack.rep_id !== "" && pack.rep_id.length > 0) {
+        if (pack.pack_file && pack.pack_file !== "" && pack.pack_file.length > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function InputZone(props) {
     const [name, setName] = React.useState("");
     const [error, setError] = React.useState(null);
     const [helperText, setHelperText] = React.useState(" ");
+    const [disabled, setDisabled] = React.useState(validPack(props.pack));
+    const [timeoutId, setTimeoutId] = React.useState(null);
 
-    const checkName = debounce((name) => {
+    React.useEffect(() => {
+        setDisabled(validPack(props.pack));
+    }, [props.pack]);
 
+    const checkName = (name) => {
         if (name && name !== "" && name.length > 0) {
             const address = sessionStorage.getItem("apiAddress");
             axios.post(`//${address}/checks/packname`, {
@@ -55,15 +78,30 @@ function InputZone() {
             })
             .then((response) => {
                 if (response.data === "OK") {
+                    props.setPack({
+                        ...props.pack,
+                        rep_id: name,
+                    });
                     setError(null);
                     setHelperText(" ");
                 } else {
+                    props.setPack({
+                        ...props.pack,
+                        rep_id: "",
+                    });
                     setError(true);
                     setHelperText(response.data);
                 }
             })
         }
-    }, 1000);
+    };
+
+    const handleDirChange = (event) => {
+        props.setPack({
+            ...props.pack,
+            game_dir: event.target.value,
+        });
+    };
 
     const inputContainer = {
         width: '95%',
@@ -87,7 +125,12 @@ function InputZone() {
                             setName(e.target.value);
                             setError(null);
                             setHelperText(" ");
-                            checkName(e.target.value);
+                            if (timeoutId) {
+                                clearTimeout(timeoutId);
+                            }
+                            setTimeoutId(setTimeout(() => {
+                                checkName(e.target.value);
+                            }, 300));
                         }}
                         error={error}
                         helperText={helperText}
@@ -110,6 +153,9 @@ function InputZone() {
                                 e.preventDefault();
                             }
                         }}
+                        onChange={(e) => {
+                            handleDirChange(e);
+                        }}
                     />
                 </Grid>
                 <Grid item xs={3} style={{
@@ -117,7 +163,13 @@ function InputZone() {
                     justifyContent: 'flex-end',
                     alignItems: 'center',
                 }}>
-                    <Fab variant="extended" color="primary" aria-label="add" style={{color: 'black'}}>
+                    <Fab 
+                        variant="extended"
+                        color="primary"
+                        aria-label="add"
+                        style={{color: 'black'}}
+                        {...(disabled ? {} : {disabled: true})}
+                        >
                         <AddIcon sx={{ mr: 1}}/>
                         Create
                     </Fab>
@@ -127,7 +179,7 @@ function InputZone() {
     )
 }
 
-function DropZone() {
+function DropZone(props) {
     const [dragging, setDragging] = React.useState(false);
     const [file, setFile] = React.useState([]);
     const [error, setError] = React.useState(null);
@@ -158,9 +210,17 @@ function DropZone() {
             .then((response) => {
                 if (response.data === "OK") {
                     setFile(file);
+                    props.setPack({
+                        ...props.pack,
+                        pack_file: file,
+                    });
                     setError(null);
                 } else {
                     setError(response.data);
+                    props.setPack({
+                        ...props.pack,
+                        pack_file: "",
+                    })
                     setFile([]);
                 }
             })
