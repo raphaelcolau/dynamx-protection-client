@@ -4,6 +4,7 @@ import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
+import { debounce } from 'lodash';
 
 export default function PageAdd() {
     const pageContainer = {
@@ -41,6 +42,29 @@ export default function PageAdd() {
 }
 
 function InputZone() {
+    const [name, setName] = React.useState("");
+    const [error, setError] = React.useState(null);
+    const [helperText, setHelperText] = React.useState(" ");
+
+    const checkName = debounce((name) => {
+
+        const address = sessionStorage.getItem("apiAddress");
+        axios.post(`//${address}/checks/packname`, {
+            packName: name,
+        })
+        .then((response) => {
+            if (response.data === "OK") {
+                setError(null);
+                setHelperText(" ");
+            } else {
+                setError(true);
+                setHelperText(response.data);
+            }
+        })
+        
+
+    }, 1000);
+
     const inputContainer = {
         width: '95%',
         height: '28vh',
@@ -51,18 +75,29 @@ function InputZone() {
     
     return (
         <div style={inputContainer}>
-            <Grid container spacing={0} style={{gap: "1rem 0"}}>
+            <Grid container spacing={0} style={{gap: "0rem 0"}}>
                 <Grid item xs={12}>
+
                     <TextField 
+                        value={name}
                         style={{width: "100%"}}
                         variant="outlined"
                         label="Package Name"
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            setError(null);
+                            setHelperText(" ");
+                            checkName(e.target.value);
+                        }}
+                        error={error}
+                        helperText={helperText}
                         onKeyDown={(e) => {
                             if(!/^[a-zA-Z0-9-]+$/.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                     />
+
                 </Grid>
                 <Grid item xs={9}>
                     <TextField 
