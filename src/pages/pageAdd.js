@@ -1,9 +1,10 @@
-import { Paper, TextField, Grid, Fab } from '@mui/material';
+import { Paper, TextField, Grid, Fab, CircularProgress } from '@mui/material';
 import * as React from 'react';
 import PageComponent from '../components/page/page';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
+import { Box } from '@mui/system';
 
 export default function PageAdd() {
     const [pack, setPack] = React.useState({
@@ -11,10 +12,7 @@ export default function PageAdd() {
         game_dir: "",
         pack_file: [],
     });
-
-    React.useEffect(() => {
-        console.log(pack);
-    }, [pack]);
+    const [loading, setLoading] = React.useState(true);
 
     const pageContainer = {
         width: '100%',
@@ -42,7 +40,7 @@ export default function PageAdd() {
                 </Paper>
 
                 <Paper elevation={1} style={paperStyle}>
-                    <InputZone pack={pack} setPack={setPack} />
+                    <InputZone pack={pack} setPack={setPack} loading={loading}/>
                 </Paper>
 
             </div>
@@ -52,12 +50,14 @@ export default function PageAdd() {
 
 function validPack(pack) {
     if (pack.rep_id && pack.rep_id !== "" && pack.rep_id.length > 0) {
-        if (pack.pack_file && pack.pack_file !== "" && pack.pack_file.length > 0) {
+        if (pack.pack_file instanceof File && pack.pack_file !== null && pack.pack_file !== undefined && pack.pack_file !== "") {
             return true;
         }
     }
     return false;
 }
+
+
 
 function InputZone(props) {
     const [name, setName] = React.useState("");
@@ -160,19 +160,35 @@ function InputZone(props) {
                 </Grid>
                 <Grid item xs={3} style={{
                     display: 'flex',
-                    justifyContent: 'flex-end',
+                    justifyContent: props.loading ? 'center' : 'flex-end',
                     alignItems: 'center',
                 }}>
-                    <Fab 
-                        variant="extended"
-                        color="primary"
-                        aria-label="add"
-                        style={{color: 'black'}}
-                        {...(disabled ? {} : {disabled: true})}
-                        >
-                        <AddIcon sx={{ mr: 1}}/>
-                        Create
-                    </Fab>
+
+                    <Box sx={{position: "relative"}}>
+                        <Fab 
+                            style={{color: 'black'}}
+                            color="primary"
+                            aria-label="add"
+                            {...((disabled || !props.loading) ? {} : {disabled: true})}
+                            {...(props.loading ? {} : {variant: "extended"})}
+                            >
+                            <AddIcon sx={{ mr: props.loading ? 0 : 1 }}/>
+                            {props.loading ? null : "Create"}
+                        </Fab>
+                        {props.loading ? 
+                            <CircularProgress
+                                size={68}
+                                sx={{
+                                    color: "primary.main",
+                                    position: "absolute",
+                                    top: -6,
+                                    left: -6,
+                                    zIndex: 1,
+                                }}
+                            /> 
+                        : null}
+                    </Box>
+
                 </Grid>
             </Grid>
         </div>
