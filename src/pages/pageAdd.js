@@ -48,21 +48,21 @@ function InputZone() {
 
     const checkName = debounce((name) => {
 
-        const address = sessionStorage.getItem("apiAddress");
-        axios.post(`//${address}/checks/packname`, {
-            packName: name,
-        })
-        .then((response) => {
-            if (response.data === "OK") {
-                setError(null);
-                setHelperText(" ");
-            } else {
-                setError(true);
-                setHelperText(response.data);
-            }
-        })
-        
-
+        if (name && name !== "" && name.length > 0) {
+            const address = sessionStorage.getItem("apiAddress");
+            axios.post(`//${address}/checks/packname`, {
+                packName: name,
+            })
+            .then((response) => {
+                if (response.data === "OK") {
+                    setError(null);
+                    setHelperText(" ");
+                } else {
+                    setError(true);
+                    setHelperText(response.data);
+                }
+            })
+        }
     }, 1000);
 
     const inputContainer = {
