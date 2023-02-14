@@ -36,47 +36,27 @@ export default function BottomNavigationComponent(props) {
             <BottomNavigationAction
                 label="Home"
                 icon={<HomeIcon sx={ActionIconStyle} />}
-                onClick={() => {
-                    setTimeout(() => {
-                        navigate("/home")
-                    }, 400);
-                }}
+                onClick={() => { navigate("/home")}}
             />
             <BottomNavigationAction
                 label="Add"
                 icon={<LibraryAddIcon sx={ActionIconStyle}/>}
-                onClick={() => {
-                    setTimeout(() => {
-                        navigate("/add")
-                    }, 400);
-                }}
+                onClick={() => {navigate("/add")}}
             />
             <BottomNavigationAction
                 label="Packs"
                 icon={<LibraryBooksIcon sx={ActionIconStyle}/>}
-                onClick={() => {
-                    setTimeout(() => {
-                        navigate("/packs")
-                    }, 400);
-                }}
+                onClick={() => {navigate("/packs")}}
             />
             <BottomNavigationAction
                 label="Whitelist"
                 icon={<PlaylistAddCheckIcon sx={ActionIconStyle}/>}
-                onClick={() => {
-                    setTimeout(() => {
-                        navigate("/whitelist")
-                    }, 400);
-                }}
+                onClick={() => {navigate("/whitelist")}}
             />
             <BottomNavigationAction
                 label="Blacklist"
                 icon={<PlaylistRemoveIcon sx={ActionIconStyle}/>}
-                onClick={() => {
-                    setTimeout(() => {
-                        navigate("/blacklist")
-                    }, 400);
-                }}
+                onClick={() => {navigate("/blacklist")}}
             />
         </BottomNavigation>
     );
