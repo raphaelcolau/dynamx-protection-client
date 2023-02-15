@@ -52,7 +52,7 @@ export default function PageAdd() {
     );
 }
 
-function createPack(pack, setLoading, setSnackbar, setDownloadLink) {
+function createPack(pack, setLoading, setSnackbar, setDownloadLink, setPack) {
     const apiAddress = sessionStorage.getItem("apiAddress");
     const fileName = pack.pack_file.name;
     const file = new Blob([pack.pack_file], {type: "application/zip"});    
@@ -73,6 +73,11 @@ function createPack(pack, setLoading, setSnackbar, setDownloadLink) {
             setDownloadLink(response.data.dl_link);
             setSnackbar(true);
         }
+        setPack({
+            rep_id: "",
+            game_dir: "",
+            pack_file: [],
+        })
         setLoading(false);
     }).catch((error) => {
         console.log(error);
@@ -91,15 +96,18 @@ function validPack(pack) {
 
 function InputZone(props) {
     const [name, setName] = React.useState("");
+    const [gameDir, setGameDir] = React.useState("");
     const [error, setError] = React.useState(null);
     const [helperText, setHelperText] = React.useState(" ");
     const [disabled, setDisabled] = React.useState(validPack(props.pack));
     const [timeoutId, setTimeoutId] = React.useState(null);
-    const [snackbarOpen, setSnackbarOpen] = React.useState(true);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
     const [downloadLink, setDownloadLink] = React.useState(null);
 
     React.useEffect(() => {
         setDisabled(validPack(props.pack));
+        setName(props.pack.rep_id);
+        setGameDir(props.pack.game_dir);
     }, [props.pack]);
 
     const checkName = (name) => {
@@ -133,6 +141,7 @@ function InputZone(props) {
             ...props.pack,
             game_dir: event.target.value,
         });
+        setGameDir(event.target.value);
     };
 
     const inputContainer = {
@@ -177,6 +186,7 @@ function InputZone(props) {
                 <Grid item xs={9}>
                     <TextField 
                         style={{width: "90%"}}
+                        value={gameDir}
                         variant="outlined"
                         label="Root folder"
                         placeholder={`e.g. "MyMod" don't include the dot`}
@@ -204,7 +214,7 @@ function InputZone(props) {
                             {...((!props.loading && disabled) ? {} : {disabled: true})}
                             {...(props.loading ? {} : {variant: "extended"})}
                             onClick={() => {
-                                createPack(props.pack, props.setLoading, setSnackbarOpen, setDownloadLink);
+                                createPack(props.pack, props.setLoading, setSnackbarOpen, setDownloadLink, props.setPack);
                             }}
                             >
                             <AddIcon sx={{ mr: props.loading ? 0 : 1 }}/>
@@ -270,6 +280,10 @@ function DropZone(props) {
     const [dragging, setDragging] = React.useState(false);
     const [file, setFile] = React.useState([]);
     const [error, setError] = React.useState(null);
+
+    React.useEffect(() => {
+        setFile(props.pack.pack_file);
+    }, [props.pack]);
 
     const onDragEnter = (e) => {
         e.preventDefault();
