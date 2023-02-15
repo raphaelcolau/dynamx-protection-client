@@ -5,8 +5,9 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
 import { Box } from '@mui/system';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, ThemeProvider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { DynamXTheme } from '../config/dynamxtheme';
 
 export default function PageAdd() {
     const [pack, setPack] = React.useState({
@@ -232,16 +233,27 @@ function InputZone(props) {
                     setSnackbarOpen(false);
                 }}
                 message="Package protected successfully"
+                sx={{
+                    position: "absolute",
+                    bottom: "15vh",
+                    left: "0",
+                    right: "0",
+                    margin: "auto",
+                    width: "70vw",
+                    maxWidth: "100%",
+                }}
                 action={
                     <React.Fragment>
-                        <Button color="secondary" size="small" onClick={() => {}}>
-                            Download
-                        </Button>
-                        <IconButton size="small" aria-label="close" color="inherit" onClick={() => {
-                            setSnackbarOpen(false);
-                        }}>
-                            <CloseIcon fontSize="small" />
-                        </IconButton>
+                        <ThemeProvider theme={DynamXTheme}>
+                            <Button color="secondary" size="small" onClick={() => {}}>
+                                Download
+                            </Button>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={() => {
+                                setSnackbarOpen(false);
+                            }}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        </ThemeProvider>
                     </React.Fragment>
                 }
             />
