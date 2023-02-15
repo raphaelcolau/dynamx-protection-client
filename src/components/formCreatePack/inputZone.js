@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { TextField, Grid, Fab, CircularProgress, Snackbar } from '@mui/material';
+import { TextField, Grid, Fab, CircularProgress } from '@mui/material';
 import { Box } from '@mui/system';
-import { Button, IconButton, ThemeProvider } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import { DynamXTheme } from '../../config/dynamxtheme';
 import validPack from './validPack';
 import axios from 'axios';
 import createPack from '../../adapters/createPack';
-const { ipcRenderer } = window.require("electron");
+import SnackBarPack from './snackBar';
 
 
 export default function InputZone(props) {
@@ -154,40 +151,7 @@ export default function InputZone(props) {
                 </Grid>
             </Grid>
 
-            <Snackbar 
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={() => {
-                    setSnackbarOpen(false);
-                }}
-                message="Package protected successfully"
-                sx={{
-                    position: "absolute",
-                    bottom: "15vh",
-                    left: "0",
-                    right: "0",
-                    margin: "auto",
-                    width: "70vw",
-                    maxWidth: "100%",
-                }}
-                action={
-                    <React.Fragment>
-                        <ThemeProvider theme={DynamXTheme}>
-                            <Button color="secondary" size="small" onClick={() => {
-                                ipcRenderer.send("browser-url", downloadLink);
-                                setSnackbarOpen(false);
-                            }}>
-                                Download
-                            </Button>
-                            <IconButton size="small" aria-label="close" color="inherit" onClick={() => {
-                                setSnackbarOpen(false);
-                            }}>
-                                <CloseIcon fontSize="small" />
-                            </IconButton>
-                        </ThemeProvider>
-                    </React.Fragment>
-                }
-            />
+            <SnackBarPack downloadLink={downloadLink} snackbarOpen={snackbarOpen} setSnackbarOpen={setSnackbarOpen} />
         </div>
     )
 }
