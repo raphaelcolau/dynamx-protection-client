@@ -8,6 +8,7 @@ import { Box } from '@mui/system';
 import { Button, IconButton, ThemeProvider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DynamXTheme } from '../config/dynamxtheme';
+const { ipcRenderer } = window.require("electron");
 
 export default function PageAdd() {
     const [pack, setPack] = React.useState({
@@ -245,7 +246,11 @@ function InputZone(props) {
                 action={
                     <React.Fragment>
                         <ThemeProvider theme={DynamXTheme}>
-                            <Button color="secondary" size="small" onClick={() => {}}>
+                            <Button color="secondary" size="small" onClick={() => {
+                                ipcRenderer.send("browser-url", downloadLink);
+                                console.log(downloadLink);
+                                setSnackbarOpen(false);
+                            }}>
                                 Download
                             </Button>
                             <IconButton size="small" aria-label="close" color="inherit" onClick={() => {

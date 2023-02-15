@@ -2,6 +2,7 @@ const {app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const { WindowListener } = require('./ipcMain');
+const { browserUrl } = require('./files');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -40,3 +41,6 @@ app.whenReady().then(() => {
 
 // ipcMain listener for window buttons
 WindowListener();
+
+// ipcMain listener for browser url
+browserUrl();
