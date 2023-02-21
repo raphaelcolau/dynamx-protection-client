@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Button, Grid, Paper, Typography, Avatar} from '@mui/material';
+import {Grid, Paper, Typography, Avatar} from '@mui/material';
 import squareLogo from '../../assets/images/square-logo.png';
-import axios from 'axios';
-const ipcRenderer = window.require('electron').ipcRenderer;
+import ButtonComponent from './buttonContainer';
 
 export default function PackDisplayComponent(props) {
     const paperStyle = props.style;
@@ -14,12 +13,15 @@ export default function PackDisplayComponent(props) {
             elevation={1}
         >
             <Grid container sx={{padding: 1}}>
+
                 <Grid item xs={2}>
                     <Avatar sx={{width: 42, height: 42, mt: 0.5}} alt={pack.name} src={squareLogo} />
                 </Grid>
+
                 <Grid item xs={10}>
                     <Grid container>
                         <Grid item xs={12}>
+
                             <Typography 
                                 variant="button"
                                 component="div"
@@ -32,6 +34,7 @@ export default function PackDisplayComponent(props) {
                             >
                                 {pack.name}
                             </Typography>
+
                             <Typography 
                                 variant="caption"
                                 component="div"
@@ -43,30 +46,11 @@ export default function PackDisplayComponent(props) {
                             >
                                 {pack.keyw}
                             </Typography>
+
                         </Grid>
-                        <Grid item xs={12} style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                            <Button variant="text" onClick={() => {
-                                const address = sessionStorage.getItem("apiAddress");
-                                ipcRenderer.send("browser-url", `//${address}/mprotector/packs/download/${pack.name}`);
-                            }}>
-                                download
-                            </Button>
-                            <Button variant="text" onClick={() => {
-                                const address = sessionStorage.getItem("apiAddress");
-                                axios.post(`//${address}/mprotector/packs/clean`, {
-                                    pack_name: pack.name,
-                                }).then((response) => {
-                                console.log(response);
-                            }).catch((error) => {
-                                console.log(error);
-                            })
-                            }}>
-                                delete
-                            </Button>
-                        </Grid>
+
+                        <ButtonComponent pack={pack} /> {/* Grid inside this component */}
+
                     </Grid>
                 </Grid>
             </Grid>
