@@ -1,21 +1,28 @@
 import * as React from 'react';
 import PageComponent from '../components/page/page';
 import axios from 'axios';
-import { Avatar, Button, Grid, Paper, Typography } from '@mui/material';
-import squareLogo from '../assets/images/square-logo.png';
-const ipcRenderer = window.require('electron').ipcRenderer;
+import { Grid } from '@mui/material';
+import PackDisplayComponent from '../components/packDisplay/packdisplay';
+import StatsPackComponent from '../components/packStats/packstats';
 
 export default function PagePacks() {
     const [packs, setPacks] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
 
+    /*
+        React.StrictMode renders the components twice on development mode.
+    */
     React.useEffect(() => {
         const address = sessionStorage.getItem("apiAddress");
-        axios.get(`//${address}/mprotector/packs/list`).then((response) => {
-            setPacks(response.data);
-        }).catch((error) => {
-            console.log(error);
-        })
-    })
+        if (loading) {
+            axios.get(`//${address}/mprotector/packs/list`).then((response) => {
+                setPacks(response.data);
+                setLoading(false);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    }, [loading]);
 
     const pageContainer = {
         width: '90%',
@@ -41,65 +48,11 @@ export default function PagePacks() {
                     return (
                         <Grid container key={pack._id} spacing={2}>
                             <Grid item xs={8}>
-                                <Paper 
-                                    style={paperStyle}
-                                    elevation={1}
-                                >
-                                    <Grid container sx={{padding: 1}}>
-                                        <Grid item xs={2}>
-                                            <Avatar sx={{width: 42, height: 42, mt: 0.5}} alt={pack.name} src={squareLogo} />
-                                        </Grid>
-                                        <Grid item xs={10}>
-                                            <Grid container>
-                                                <Grid item xs={12}>
-                                                    <Typography 
-                                                        variant="button"
-                                                        component="div"
-                                                        sx={{mt: 0.5}}
-                                                        style={{
-                                                            overflow: "hidden",
-                                                            textOverflow: "ellipsis",
-                                                            whiteSpace: "nowrap",
-                                                        }}    
-                                                    >
-                                                        {pack.name}
-                                                    </Typography>
-                                                    <Typography 
-                                                        variant="caption"
-                                                        component="div"
-                                                        style={{
-                                                            overflow: "hidden",
-                                                            textOverflow: "ellipsis",
-                                                            whiteSpace: "nowrap",
-                                                        }}
-                                                    >
-                                                        {pack.keyw}
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid item xs={12} style={{
-                                                    display: 'flex',
-                                                    justifyContent: 'flex-end',
-                                                }}>
-                                                    <Button variant="text" onClick={() => {
-                                                        const address = sessionStorage.getItem("apiAddress");
-                                                        ipcRenderer.send("browser-url", `//${address}/mprotector/packs/download/${pack.name}`);
-                                                    }}>
-                                                        download
-                                                    </Button>
-                                                    <Button variant="text">
-                                                        delete
-                                                    </Button>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
+                                <PackDisplayComponent pack={pack} style={paperStyle} />
                             </Grid>
 
                             <Grid item xs={4}>
-                                <Paper style={paperStyle} elevation={1} >
-                                    stats
-                                </Paper>
+                                <StatsPackComponent style={paperStyle} pack={pack} />
                             </Grid>
                         </Grid>
                     )
