@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Paper, Tooltip } from '@mui/material';
+import { Paper } from '@mui/material';
 import axios from 'axios';
 import {
     Chart,
     BarSeries,
-    ArgumentAxis,
-    ValueAxis,
   } from '@devexpress/dx-react-chart-material-ui';
   import { Animation } from '@devexpress/dx-react-chart';
 
@@ -97,7 +95,6 @@ export default function StatsPackComponent(props) {
         if (pack._id === undefined) {return} else {
             const address = sessionStorage.getItem("apiAddress");
             axios.get(`//${address}/statistics/packs/?id=${pack._id}`).then((response) => {
-                setStats(response.data);
                 if (stats === "" && response.data !== "") {
                     setStats(createMonthObject(6, response.data));
                 }
