@@ -1,7 +1,13 @@
 import * as React from 'react';
-import { Paper } from '@mui/material';
+import { Paper, Tooltip } from '@mui/material';
 import axios from 'axios';
-
+import {
+    Chart,
+    BarSeries,
+    ArgumentAxis,
+    ValueAxis,
+  } from '@devexpress/dx-react-chart-material-ui';
+  import { Animation } from '@devexpress/dx-react-chart';
 
 /*
     The date is formatted as dd/mm/yyyy hh:mm:ss
@@ -53,18 +59,16 @@ function monthLengh(logs, month, year) {
 /*
     This function creates an object with the following format:
     {
-        "01/21": {},
-        "02/21": {},
-        "03/21": {},
-        "04/21": {},
-        "05/21": {},
+        {month: "01/20", usage: 10},
+        {month: "02/20", usage: 20},
+        {month: "03/20", usage: 30},
+        {month: "04/20", usage: 40},
         ...
     }
     the number of months is specified by the numMonths parameter
 */
 function createMonthObject(numMonths, logs) {
     let today = new Date();
-    // let monthObj = {};
     let globalObj = [];
   
     for (let i = 0; i < numMonths; i++) {
@@ -75,7 +79,6 @@ function createMonthObject(numMonths, logs) {
         year--;
       }
       let monthString = (month + 1).toString().padStart(2, "0") + "/" + year.toString().slice(-2);
-    //   monthObj[monthString] = monthLengh(logs, month+1, year);
       globalObj.push({
         month: monthString,
         usage: monthLengh(logs, month+1, year)
@@ -87,7 +90,6 @@ function createMonthObject(numMonths, logs) {
 }
 
 export default function StatsPackComponent(props) {
-    const [logs, setLogs] = React.useState("");
     const [stats, setStats] = React.useState("");
     const pack = props.pack;
 
@@ -95,23 +97,32 @@ export default function StatsPackComponent(props) {
         if (pack._id === undefined) {return} else {
             const address = sessionStorage.getItem("apiAddress");
             axios.get(`//${address}/statistics/packs/?id=${pack._id}`).then((response) => {
-                setLogs(response.data);
+                setStats(response.data);
                 if (stats === "" && response.data !== "") {
                     setStats(createMonthObject(6, response.data));
                 }
-                console.log(stats)
             }).catch((error) => {
                 console.log(error);
             })
         }
     }, [pack._id, stats]);
 
-    if (logs !== "") {
-    }
-
     return (
         <Paper style={props.style} elevation={1} >
-            {logs !== "" ? logs.toString() : "No usage recorded"}
+
+            {stats !== "" ? 
+                <Chart
+                    data={stats}
+                    height="100"
+                >
+                    <BarSeries 
+                        color="#e6750c"
+                        valueField="usage"
+                        argumentField="month"
+                    />
+                    <Animation />
+                </Chart>
+            : "No usage recorded"}
         </Paper>
     )
 }
