@@ -105,7 +105,7 @@ export default function StatsPackComponent(props) {
 
     return (
         <Paper style={props.style} elevation={1} >
-            {logs !== "" ? logs.toString() : "No logs"}
+            {logs !== "" ? logs.toString() : "No usage recorded"}
         </Paper>
     )
 }
