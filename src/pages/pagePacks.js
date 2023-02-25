@@ -39,6 +39,7 @@ export default function PagePacks() {
     const paperStyle = {
         width: '100%',
         height: '16vh',
+        overflow: 'hidden',
     }
 
     return (
