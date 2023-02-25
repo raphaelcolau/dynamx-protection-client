@@ -64,7 +64,8 @@ function monthLengh(logs, month, year) {
 */
 function createMonthObject(numMonths, logs) {
     let today = new Date();
-    let monthObj = {};
+    // let monthObj = {};
+    let globalObj = [];
   
     for (let i = 0; i < numMonths; i++) {
       let month = today.getMonth() - i;
@@ -74,10 +75,15 @@ function createMonthObject(numMonths, logs) {
         year--;
       }
       let monthString = (month + 1).toString().padStart(2, "0") + "/" + year.toString().slice(-2);
-      monthObj[monthString] = monthLengh(logs, month+1, year);
+    //   monthObj[monthString] = monthLengh(logs, month+1, year);
+      globalObj.push({
+        month: monthString,
+        usage: monthLengh(logs, month+1, year)
+      })
+
     }
 
-    return monthObj;
+    return globalObj;
 }
 
 export default function StatsPackComponent(props) {
