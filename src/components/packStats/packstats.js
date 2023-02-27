@@ -4,12 +4,12 @@ import axios from 'axios';
 import {
     Chart,
     BarSeries,
-  } from '@devexpress/dx-react-chart-material-ui';
-  import { Animation, ArgumentAxis } from '@devexpress/dx-react-chart';
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation, ArgumentAxis } from '@devexpress/dx-react-chart';
 
 
-  //TODO: Total usage of the pack
-  //TODO: Progression from last month
+//TODO: Progression from last month
+//TODO: Total usage of the pack
 /*
     The date is formatted as dd/mm/yyyy hh:mm:ss
     The logs are stored in the following format:
@@ -21,7 +21,7 @@ import {
                         "28/01/2020 00:00:00": "Player sent a request to receive this pack"
                     },
                     1: {
-                        "28/01/2020 01:00:00": "Player sent a request to receive this pack"
+                        "28/01/2020 01:00:00": "Player sent a request to receive this pack",
                         "28/01/2020 01:15:36": "Player sent a request to receive this pack"
                     }
                 }
