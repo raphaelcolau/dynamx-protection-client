@@ -5,7 +5,7 @@ import {
     Chart,
     BarSeries,
   } from '@devexpress/dx-react-chart-material-ui';
-  import { Animation } from '@devexpress/dx-react-chart';
+  import { Animation, ArgumentAxis } from '@devexpress/dx-react-chart';
 
 /*
     The date is formatted as dd/mm/yyyy hh:mm:ss
@@ -110,8 +110,25 @@ export default function StatsPackComponent(props) {
             {stats !== "" ? 
                 <Chart
                     data={stats}
-                    height="100"
+                    height="200"
+                    width="330"
+                    style={{
+                        transform: "scale(0.5)",
+                        transformOrigin: "top left",
+                        fill: "#FFFFFF",
+                    }}
                 >
+                    {/*  There is a problem with the ArgumentAxis component of the dx-react-chart lib in React StrictMode */}
+                    {(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 
+                        <></>
+                    : 
+                        <ArgumentAxis 
+                        showGrid={false}
+                        showLine={false}
+                        showTicks={false}
+                        />
+                    }
+                
                     <BarSeries 
                         color="#e6750c"
                         valueField="usage"
