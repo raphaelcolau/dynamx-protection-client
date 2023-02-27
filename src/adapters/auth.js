@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async function Login(address, setConnecting, setError) {
-
     try {
         const response = await axios.post(`//${address}/auth/connect`, {});
         console.log(response.data);

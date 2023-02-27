@@ -51,9 +51,11 @@ export default function PageLogin() {
 						onClick={() => {
 							if (address !== "" && address !== undefined && address !== null) {
 								setConnecting(true);
-								if (LoginAdapter(address, setConnecting, setError)) {
-									navigate("/home");
-								}
+								LoginAdapter(address, setConnecting, setError).then(result => {
+									if (result) {
+										navigate("/home");
+									}
+								});
 							}
 						}}	
 						>
