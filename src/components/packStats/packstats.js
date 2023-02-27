@@ -7,6 +7,9 @@ import {
   } from '@devexpress/dx-react-chart-material-ui';
   import { Animation, ArgumentAxis } from '@devexpress/dx-react-chart';
 
+
+  //TODO: Total usage of the pack
+  //TODO: Progression from last month
 /*
     The date is formatted as dd/mm/yyyy hh:mm:ss
     The logs are stored in the following format:
