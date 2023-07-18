@@ -68,14 +68,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^2.1.3",
     "sass": "^1.57.1",
     "styled-components": "^5.3.6",
     "wait-on": "^7.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "react-start": "react-scripts start",
+    "react-start": "react-scripts --max_old_space_size=8128 start",
     "react-build": "react-scripts build",
     "electron-build": "electron-builder",
     "build": "GENERATE_SOURCEMAP=false react-scripts build && electron-builder",
