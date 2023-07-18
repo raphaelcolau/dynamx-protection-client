@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import background from '../../assets/images/background.png';
 import MenuBarComponent from '../menubar/menubar';
 import BottomNavigationComponent from './bottomNavigation';
+import React from 'react';
 
 const Page = styled.div`
     width: 100wh;
