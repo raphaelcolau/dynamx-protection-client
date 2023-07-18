@@ -27,7 +27,7 @@ export default function InputZone(props) {
     const checkName = (name) => {
         if (name && name !== "" && name.length > 0) {
             const address = sessionStorage.getItem("apiAddress");
-            axios.post(`//${address}/checks/packname`, {
+            axios.post(`https://${address}/checks/packname`, {
                 packName: name,
             })
             .then((response) => {

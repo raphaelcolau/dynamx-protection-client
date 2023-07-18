@@ -12,13 +12,13 @@ export default function ButtonComponent(props) {
         }}>
             <Button variant="text" onClick={() => {
                 const address = sessionStorage.getItem("apiAddress");
-                ipcRenderer.send("browser-url", `//${address}/mprotector/packs/download/${pack.name}`);
+                ipcRenderer.send("browser-url", `https://${address}/mprotector/packs/download/${pack.name}`);
             }}>
                 download
             </Button>
             <Button variant="text" onClick={() => {
                 const address = sessionStorage.getItem("apiAddress");
-                axios.post(`//${address}/mprotector/packs/clean`, {
+                axios.post(`https://${address}/mprotector/packs/clean`, {
                     pack_name: pack.name,
                 }).then((response) => {
                 console.log(response);

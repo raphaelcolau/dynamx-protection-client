@@ -97,7 +97,7 @@ export default function StatsPackComponent(props) {
     React.useEffect(() => {
         if (pack._id === undefined) {return} else {
             const address = sessionStorage.getItem("apiAddress");
-            axios.get(`//${address}/statistics/packs/?id=${pack._id}`).then((response) => {
+            axios.get(`https://${address}/statistics/packs/?id=${pack._id}`).then((response) => {
                 if (stats === "" && response.data !== "") {
                     setStats(createMonthObject(6, response.data));
                 }

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function Login(address, setConnecting, setError) {
     try {
-        const response = await axios.post(`//${address}/auth/connect`, {});
+        const response = await axios.post(`https://${address}/auth/connect`, {});
         console.log(response.data);
         sessionStorage.setItem("apiAddress", address);
         setConnecting(false);

@@ -11,8 +11,7 @@ export default function createPack(pack, setLoading, setSnackbar, setDownloadLin
     formData.append("game_dir", pack.game_dir);
     setLoading(true);
 
-
-    axios.post(`//${apiAddress}/mprotector/packs/zip`, formData, {
+    axios.post(`https://${apiAddress}/mprotector/packs/zip`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

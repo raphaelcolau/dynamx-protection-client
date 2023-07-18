@@ -31,7 +31,7 @@ export default function DropZone(props) {
     const defineFile = (file) => {
         const address = sessionStorage.getItem("apiAddress");
         if (file && file.name && !file.name !== "" && file.path && !file.path !== "") {
-            axios.post(`//${address}/checks/filename`, {
+            axios.post(`https://${address}/checks/filename`, {
                 fileName: file.name,
             })
             .then((response) => {

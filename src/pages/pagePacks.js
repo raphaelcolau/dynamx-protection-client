@@ -15,7 +15,7 @@ export default function PagePacks() {
     React.useEffect(() => {
         const address = sessionStorage.getItem("apiAddress");
         if (loading) {
-            axios.get(`//${address}/mprotector/packs/list`).then((response) => {
+            axios.get(`https://${address}/mprotector/packs/list`).then((response) => {
                 setPacks(response.data);
                 setLoading(false);
             }).catch((error) => {
